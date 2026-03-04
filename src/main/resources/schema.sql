@@ -1,0 +1,8 @@
+CREATE SEQUENCE IF NOT EXISTS empleado_clave_seq START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE IF NOT EXISTS empleados (
+    clave VARCHAR(20) PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    direccion VARCHAR(100) NOT NULL,
+    telefono VARCHAR(100) NOT NULL
+);

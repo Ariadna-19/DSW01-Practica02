@@ -1,0 +1,16 @@
+target/
+build/
+.gradle/
+.mvn/
+!/.mvn/wrapper/maven-wrapper.jar
+*.class
+*.jar
+*.log
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.env
+.env.*

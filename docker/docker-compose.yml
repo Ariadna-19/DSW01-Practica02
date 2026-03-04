@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: dsw01-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: dsw01_practica02
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d dsw01_practica02"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: dsw01-app
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: dsw01_practica02
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      SPRING_SECURITY_USER_NAME: admin
+      SPRING_SECURITY_USER_PASSWORD: admin123
+      SPRING_SECURITY_USER_ROLES: USER
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:
