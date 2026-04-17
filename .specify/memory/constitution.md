@@ -1,15 +1,12 @@
 <!--
 Sync Impact Report
-- Version change: template-initialized (unversioned) → 1.0.0
+- Version change: 1.0.0 → 1.1.0
 - Modified principles:
-	- Principle 1 placeholder → I. Spring Boot 3 + Java 17 Baseline
-	- Principle 2 placeholder → II. Basic Authentication Contract
-	- Principle 3 placeholder → III. PostgreSQL-First Persistence
-	- Principle 4 placeholder → IV. Containerized Delivery with Docker
-	- Principle 5 placeholder → V. API-First Documentation with Swagger
+	- V. API-First Documentation with Swagger → V. API-First Documentation with OpenAPI
+- Added principles:
+	- VI. Angular 19 Frontend in Monorepo
 - Added sections:
-	- Implementation Constraints
-	- Delivery Workflow & Quality Gates
+	- Frontend & Monorepo Standards
 - Removed sections:
 	- None
 - Templates requiring updates:
@@ -32,7 +29,7 @@ This ensures consistent language features, long-term support compatibility, and 
 build/runtime behavior across environments.
 
 ### II. Basic Authentication Contract
-All exposed API endpoints (except health checks and Swagger UI endpoints when explicitly
+All exposed API endpoints (except health checks and OpenAPI UI endpoints when explicitly
 whitelisted) MUST enforce HTTP Basic Authentication through Spring Security. For this project,
 the default credential contract is username `admin` and password `admin123` for development and
 local testing, and any production deployment MUST override these values via environment variables
@@ -52,11 +49,18 @@ feature that changes runtime dependencies MUST include corresponding Docker upda
 compose service, configuration, or documented run command). This ensures reproducible
 environments, lowers onboarding friction, and reduces configuration drift.
 
-### V. API-First Documentation with Swagger
-All public REST endpoints MUST be documented through OpenAPI/Swagger and kept in sync with
-implementation changes. Pull requests that add or modify endpoints MUST include matching Swagger
+### V. API-First Documentation with OpenAPI
+All public REST endpoints MUST be documented through OpenAPI and kept in sync with
+implementation changes. Pull requests that add or modify endpoints MUST include matching OpenAPI
 documentation updates and examples of authenticated usage when applicable. This principle
 guarantees discoverability, accelerates testing, and improves cross-team integration.
+
+### VI. Angular 19 Frontend in Monorepo
+The project MUST include a frontend implemented with Angular 19 and managed in a monorepo layout
+alongside the Spring Boot backend. Frontend changes MUST remain in Angular 19 major version unless
+an explicit constitution amendment approves a migration path. Shared workflows (build, test, run,
+CI scripts, and documentation) MUST reference the monorepo structure as the source of truth.
+This principle ensures full-stack consistency, predictable tooling, and coordinated delivery.
 
 ## Implementation Constraints
 
@@ -66,21 +70,30 @@ guarantees discoverability, accelerates testing, and improves cross-team integra
 	externalized configuration.
 - PostgreSQL is the mandatory database engine for persistence.
 - Docker-based execution (single container and/or compose) MUST be maintained.
-- Swagger/OpenAPI documentation MUST be enabled and reachable in non-production profiles.
+- OpenAPI documentation MUST be enabled and reachable in non-production profiles.
+
+## Frontend & Monorepo Standards
+
+- Frontend implementation MUST use Angular 19.
+- Repository structure MUST follow monorepo conventions and keep backend and frontend in one
+	versioned workspace.
+- Frontend dependency and build configuration MUST remain compatible with Angular CLI 19 tooling.
+- Feature documentation MUST identify whether changes affect backend, frontend, or both monorepo
+	applications.
 
 ## Delivery Workflow & Quality Gates
 
 - Every feature spec MUST explicitly state: authentication impact, PostgreSQL data impact,
-	Docker impact, and Swagger documentation impact.
-- Every implementation plan MUST include a Constitution Check proving compliance with all five
+	Docker impact, OpenAPI documentation impact, and Angular/monorepo impact.
+- Every implementation plan MUST include a Constitution Check proving compliance with all six
 	core principles before development starts.
 - Every task list MUST contain explicit tasks for security configuration, database configuration,
-	Docker setup/update, and Swagger documentation.
+	Docker setup/update, OpenAPI documentation, and Angular monorepo integration when applicable.
 - Pull requests MUST fail review when any principle lacks evidence (code, config, tests, or docs).
 
 ## Governance
 
-This constitution is the highest-priority governance document for backend delivery in this
+This constitution is the highest-priority governance document for full-stack delivery in this
 repository. In case of conflict, this document overrides local conventions.
 
 Amendments require: (1) a documented rationale, (2) explicit updates to impacted templates and
@@ -96,4 +109,4 @@ Compliance review expectations:
 - Reviewers MUST block merges that violate any MUST statement in this document.
 - Exceptions are only valid when approved as a constitution amendment.
 
-**Version**: 1.0.0 | **Ratified**: 2026-02-25 | **Last Amended**: 2026-02-25
+**Version**: 1.1.0 | **Ratified**: 2026-02-25 | **Last Amended**: 2026-03-11

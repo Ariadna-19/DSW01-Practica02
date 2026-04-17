@@ -4,6 +4,8 @@ public record EmpleadoResponse(
     String clave,
     String nombre,
     String direccion,
-    String telefono
+    String telefono,
+    Long departamentoId,
+    String username
 ) {
 }

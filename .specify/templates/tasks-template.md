@@ -67,8 +67,10 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] T006 [P] Setup API routing/controller structure in Spring Boot 3 (Java 17)
 - [ ] T007 Create base entities/repositories used by all stories
 - [ ] T008 [P] Configure Docker runtime (Dockerfile and/or docker-compose)
-- [ ] T009 [P] Enable and configure Swagger/OpenAPI documentation
-- [ ] T010 Configure environment-based application properties management
+- [ ] T009 [P] Enable and configure OpenAPI documentation
+- [ ] T010 [P] Initialize Angular 19 app inside monorepo workspace
+- [ ] T011 [P] Configure monorepo scripts/CI tasks for backend + frontend
+- [ ] T012 Configure environment-based application properties management
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -84,17 +86,17 @@ Examples of foundational tasks (adjust based on your project):
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T011 [P] [US1] Contract test for [endpoint] in tests/contract/[name]
-- [ ] T012 [P] [US1] Integration test for [user journey] in tests/integration/[name]
+- [ ] T013 [P] [US1] Contract test for [endpoint] in tests/contract/[name]
+- [ ] T014 [P] [US1] Integration test for [user journey] in tests/integration/[name]
 
 ### Implementation for User Story 1
 
-- [ ] T013 [P] [US1] Create [Entity1] in src/main/java/.../domain/[Entity1].java
-- [ ] T014 [P] [US1] Create [Entity2] in src/main/java/.../domain/[Entity2].java
-- [ ] T015 [US1] Implement service logic in src/main/java/.../service/[Service].java (depends on T013, T014)
-- [ ] T016 [US1] Implement endpoint/controller in src/main/java/.../controller/[Controller].java
-- [ ] T017 [US1] Add validation and error handling
-- [ ] T018 [US1] Update Swagger documentation for user story 1 endpoints
+- [ ] T015 [P] [US1] Create [Entity1] in src/main/java/.../domain/[Entity1].java
+- [ ] T016 [P] [US1] Create [Entity2] in src/main/java/.../domain/[Entity2].java
+- [ ] T017 [US1] Implement service logic in src/main/java/.../service/[Service].java (depends on T015, T016)
+- [ ] T018 [US1] Implement endpoint/controller in src/main/java/.../controller/[Controller].java
+- [ ] T019 [US1] Add validation and error handling
+- [ ] T020 [US1] Update OpenAPI documentation for user story 1 endpoints
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -108,15 +110,15 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T019 [P] [US2] Contract test for [endpoint] in tests/contract/[name]
-- [ ] T020 [P] [US2] Integration test for [user journey] in tests/integration/[name]
+- [ ] T021 [P] [US2] Contract test for [endpoint] in tests/contract/[name]
+- [ ] T022 [P] [US2] Integration test for [user journey] in tests/integration/[name]
 
 ### Implementation for User Story 2
 
-- [ ] T021 [P] [US2] Create [Entity] in src/main/java/.../domain/[Entity].java
-- [ ] T022 [US2] Implement service in src/main/java/.../service/[Service].java
-- [ ] T023 [US2] Implement endpoint/feature in src/main/java/.../controller/[Controller].java
-- [ ] T024 [US2] Integrate with User Story 1 components (if needed)
+- [ ] T023 [P] [US2] Create [Entity] in src/main/java/.../domain/[Entity].java
+- [ ] T024 [US2] Implement service in src/main/java/.../service/[Service].java
+- [ ] T025 [US2] Implement endpoint/feature in src/main/java/.../controller/[Controller].java
+- [ ] T026 [US2] Integrate with User Story 1 components (if needed)
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -130,14 +132,14 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T025 [P] [US3] Contract test for [endpoint] in tests/contract/[name]
-- [ ] T026 [P] [US3] Integration test for [user journey] in tests/integration/[name]
+- [ ] T027 [P] [US3] Contract test for [endpoint] in tests/contract/[name]
+- [ ] T028 [P] [US3] Integration test for [user journey] in tests/integration/[name]
 
 ### Implementation for User Story 3
 
-- [ ] T027 [P] [US3] Create [Entity] in src/main/java/.../domain/[Entity].java
-- [ ] T028 [US3] Implement [Service] in src/main/java/.../service/[Service].java
-- [ ] T029 [US3] Implement [endpoint/feature] in src/main/java/.../controller/[Controller].java
+- [ ] T029 [P] [US3] Create [Entity] in src/main/java/.../domain/[Entity].java
+- [ ] T030 [US3] Implement [Service] in src/main/java/.../service/[Service].java
+- [ ] T031 [US3] Implement [endpoint/feature] in src/main/java/.../controller/[Controller].java
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -156,7 +158,8 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] TXXX Performance optimization across all stories
 - [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
 - [ ] TXXX Security hardening (including production credential externalization)
-- [ ] TXXX Verify Swagger docs reflect all released endpoints
+- [ ] TXXX Verify OpenAPI docs reflect all released endpoints
+- [ ] TXXX Verify Angular 19 workspace tasks run for frontend in monorepo
 - [ ] TXXX Verify Docker workflows run API + PostgreSQL successfully
 - [ ] TXXX Run quickstart.md validation
 

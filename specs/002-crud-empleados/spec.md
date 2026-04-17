@@ -1,6 +1,6 @@
 # Feature Specification: CRUD de Empleados
 
-**Feature Branch**: `001-crud-empleados`  
+**Feature Branch**: `002-crud-empleados`  
 **Created**: 2026-02-25  
 **Status**: Draft  
 **Input**: User description: "Crear un crud de empleados con los campos clave, nombre, direccion y telefono. Donde clave sea el primary key y los demas campos sean de 100 espacios."

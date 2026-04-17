@@ -35,7 +35,8 @@
 - [ ] Confirms HTTP Basic Auth impact and credential strategy (dev vs production)
 - [ ] Confirms PostgreSQL persistence impact (schema/data changes documented)
 - [ ] Confirms Docker runtime impact (container/compose updates identified)
-- [ ] Confirms Swagger/OpenAPI impact for every API change
+- [ ] Confirms OpenAPI impact for every API change
+- [ ] Confirms Angular 19 + monorepo impact (frontend scope, workspace paths, and CI/scripts)
 
 ## Project Structure
 
@@ -87,7 +88,19 @@ frontend/
 │   └── services/
 └── tests/
 
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
+# [REMOVE IF UNUSED] Option 3: Monorepo (Angular 19 + Spring Boot)
+apps/
+├── backend/
+│   ├── src/
+│   └── tests/
+└── frontend/
+  ├── src/
+  └── tests/
+
+packages/
+└── [shared libs if any]
+
+# [REMOVE IF UNUSED] Option 4: Mobile + API (when "iOS/Android" detected)
 api/
 └── [same as backend above]
 

@@ -1,8 +1,20 @@
 # Seguridad del módulo de empleados
 
-## Autenticación básica
+## Login frontend (email + password)
+
+El frontend Angular usa `POST /api/auth/login` con payload JSON:
+
+- `email`
+- `password`
+
+Si la autenticación es exitosa, el frontend habilita sesión local y consume el CRUD de empleados.
+
+## Protección de endpoints
 
 Todos los endpoints bajo `/api/empleados/**` requieren HTTP Basic Authentication.
+
+- `/api/auth/login` está permitido sin autenticación previa.
+- `/api/empleados/**` permanece protegido.
 
 Valores de desarrollo por defecto:
 

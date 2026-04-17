@@ -1,0 +1,143 @@
+openapi: 3.0.3
+info:
+  title: Empleados Auth API
+  version: 1.0.0
+  description: Contrato para autenticación de empleados y compatibilidad con CRUD existente.
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/auth/login:
+    post:
+      summary: Login de empleado
+      operationId: loginEmpleado
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Resultado de autenticación
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+              examples:
+                success:
+                  value:
+                    authenticated: true
+                    empleadoClave: E-0001
+                    message: Autenticación exitosa
+                failure:
+                  value:
+                    authenticated: false
+                    empleadoClave: null
+                    message: Credenciales inválidas
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /api/empleados:
+    post:
+      summary: Crear empleado (incluye credenciales)
+      operationId: crearEmpleado
+      tags: [Empleados]
+      security:
+        - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmpleadoCreateRequest'
+      responses:
+        '201':
+          description: Empleado creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmpleadoResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    LoginRequest:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+          minLength: 3
+          maxLength: 60
+        password:
+          type: string
+          minLength: 8
+          maxLength: 128
+    LoginResponse:
+      type: object
+      required: [authenticated, message]
+      properties:
+        authenticated:
+          type: boolean
+        empleadoClave:
+          type: string
+          nullable: true
+          example: E-0001
+        message:
+          type: string
+          example: Credenciales inválidas
+    EmpleadoCreateRequest:
+      type: object
+      required: [nombre, direccion, telefono, departamentoId, username, password]
+      properties:
+        nombre:
+          type: string
+          maxLength: 100
+        direccion:
+          type: string
+          maxLength: 100
+        telefono:
+          type: string
+          maxLength: 100
+        departamentoId:
+          type: integer
+          format: int64
+        username:
+          type: string
+          minLength: 3
+          maxLength: 60
+        password:
+          type: string
+          minLength: 8
+          maxLength: 128
+    EmpleadoResponse:
+      type: object
+      required: [clave, nombre, direccion, telefono, departamentoId, username]
+      properties:
+        clave:
+          type: string
+          example: E-0001
+        nombre:
+          type: string
+        direccion:
+          type: string
+        telefono:
+          type: string
+        departamentoId:
+          type: integer
+          format: int64
+        username:
+          type: string
+  responses:
+    BadRequest:
+      description: Solicitud inválida
+    Unauthorized:
+      description: Credenciales inválidas o ausentes

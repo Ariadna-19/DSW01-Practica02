@@ -1,6 +1,9 @@
 package com.dsw01.practica02.config;
 
+import com.dsw01.practica02.exception.DepartamentoInUseException;
+import com.dsw01.practica02.exception.DepartamentoNotFoundException;
 import com.dsw01.practica02.exception.EmpleadoNotFoundException;
+import com.dsw01.practica02.exception.UsernameAlreadyExistsException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +19,22 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(EmpleadoNotFoundException.class)
-    public ResponseEntity<ApiError> handleNotFound(EmpleadoNotFoundException exception) {
+    @ExceptionHandler({EmpleadoNotFoundException.class, DepartamentoNotFoundException.class})
+    public ResponseEntity<ApiError> handleNotFound(RuntimeException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
             .body(new ApiError(404, "Not Found", exception.getMessage(), null));
+    }
+
+    @ExceptionHandler(DepartamentoInUseException.class)
+    public ResponseEntity<ApiError> handleConflict(DepartamentoInUseException exception) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+            .body(new ApiError(409, "Conflict", exception.getMessage(), null));
+    }
+
+    @ExceptionHandler(UsernameAlreadyExistsException.class)
+    public ResponseEntity<ApiError> handleUsernameConflict(UsernameAlreadyExistsException exception) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+            .body(new ApiError(409, "Conflict", exception.getMessage(), null));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

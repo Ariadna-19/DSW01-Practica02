@@ -1,0 +1,179 @@
+openapi: 3.0.3
+info:
+  title: Frontend Auth + Empleados Contract
+  version: 1.0.0
+  description: Contrato mínimo para login por email/password y CRUD de empleados consumido por frontend Angular 19.
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/auth/login:
+    post:
+      summary: Login con email y contraseña
+      operationId: loginConEmail
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Resultado de autenticación
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /api/empleados:
+    get:
+      summary: Listar empleados
+      operationId: listarEmpleados
+      tags: [Empleados]
+      responses:
+        '200':
+          description: Lista de empleados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmpleadoResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      summary: Crear empleado
+      operationId: crearEmpleado
+      tags: [Empleados]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmpleadoRequest'
+      responses:
+        '201':
+          description: Empleado creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmpleadoResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/empleados/{clave}:
+    parameters:
+      - name: clave
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Obtener detalle de empleado
+      operationId: obtenerEmpleado
+      tags: [Empleados]
+      responses:
+        '200':
+          description: Empleado encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmpleadoResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      summary: Actualizar empleado
+      operationId: actualizarEmpleado
+      tags: [Empleados]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmpleadoRequest'
+      responses:
+        '200':
+          description: Empleado actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmpleadoResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      summary: Eliminar empleado
+      operationId: eliminarEmpleado
+      tags: [Empleados]
+      responses:
+        '204':
+          description: Empleado eliminado
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 1
+    LoginResponse:
+      type: object
+      required: [authenticated, message]
+      properties:
+        authenticated:
+          type: boolean
+        message:
+          type: string
+        userEmail:
+          type: string
+          format: email
+          nullable: true
+    EmpleadoRequest:
+      type: object
+      required: [nombre, direccion, telefono]
+      properties:
+        nombre:
+          type: string
+        direccion:
+          type: string
+        telefono:
+          type: string
+    EmpleadoResponse:
+      allOf:
+        - $ref: '#/components/schemas/EmpleadoRequest'
+        - type: object
+          required: [clave]
+          properties:
+            clave:
+              type: string
+            departamentoId:
+              type: integer
+              format: int64
+              nullable: true
+            username:
+              type: string
+              nullable: true
+  responses:
+    BadRequest:
+      description: Solicitud inválida
+    Unauthorized:
+      description: No autenticado o credenciales inválidas
+    NotFound:
+      description: Recurso no encontrado

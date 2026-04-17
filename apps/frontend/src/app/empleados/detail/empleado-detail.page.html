@@ -1,0 +1,26 @@
+<section class="page">
+  <article class="card card--narrow">
+    <div class="actions">
+      <a class="btn btn-secondary" routerLink="/empleados">Volver</a>
+    </div>
+
+    @if (loading()) {
+      <p class="message message--info">Cargando detalle...</p>
+    } @else {
+      @if (empleado(); as emp) {
+        <h1 class="title">{{ emp.nombre }}</h1>
+        <div class="meta">
+          <p><strong>Clave:</strong> {{ emp.clave }}</p>
+          <p><strong>Dirección:</strong> {{ emp.direccion }}</p>
+          <p><strong>Teléfono:</strong> {{ emp.telefono }}</p>
+          <p><strong>Username:</strong> {{ emp.username ?? '-' }}</p>
+        </div>
+
+        <div class="actions">
+          <a class="btn btn-secondary" [routerLink]="['/empleados', emp.clave, 'editar']">Editar</a>
+          <button class="btn btn-danger" type="button" (click)="eliminar()">Eliminar</button>
+        </div>
+      }
+    }
+  </article>
+</section>

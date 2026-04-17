@@ -95,14 +95,16 @@
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
 - **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
 
-### Constitution Alignment *(mandatory for backend features)*
+### Constitution Alignment *(mandatory for backend/frontend features)*
 
 - **CA-001**: Feature MUST run on Spring Boot 3 with Java 17.
 - **CA-002**: Feature MUST define how HTTP Basic Authentication applies, including endpoint
   protection and exceptions.
 - **CA-003**: Feature MUST define PostgreSQL data impact (tables, schema, migrations, or none).
 - **CA-004**: Feature MUST define Docker impact (Dockerfile/compose/runtime changes, or none).
-- **CA-005**: Feature MUST define Swagger/OpenAPI updates for any endpoint changes.
+- **CA-005**: Feature MUST define OpenAPI updates for any endpoint changes.
+- **CA-006**: Frontend changes MUST target Angular 19 and specify impacted app/module paths.
+- **CA-007**: Feature MUST document monorepo impact (workspace structure, scripts, and CI tasks).
 
 ### Key Entities *(include if feature involves data)*
 

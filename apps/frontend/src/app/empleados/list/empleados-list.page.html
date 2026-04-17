@@ -1,0 +1,34 @@
+<section class="page">
+  <article class="card">
+    <div class="toolbar">
+      <div>
+        <h1 class="title">Empleados</h1>
+        <p class="subtitle">Listado general y accesos directos a detalle/edición.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" routerLink="/empleados/nuevo">Nuevo empleado</a>
+        <button class="btn btn-primary" type="button" (click)="logout()">Cerrar sesión</button>
+      </div>
+    </div>
+
+    @if (feedback.message(); as msg) {
+      <p class="message message--info">{{ msg }}</p>
+    }
+
+    @if (loading()) {
+      <p class="message message--info">Cargando empleados...</p>
+    } @else {
+      <ul class="list">
+        @for (empleado of empleados(); track empleado.clave) {
+          <li>
+            <div class="meta">
+              <strong>{{ empleado.nombre }}</strong>
+              <span>{{ empleado.clave }}</span>
+            </div>
+            <a class="btn btn-secondary" [routerLink]="['/empleados', empleado.clave]">Ver detalle</a>
+          </li>
+        }
+      </ul>
+    }
+  </article>
+</section>

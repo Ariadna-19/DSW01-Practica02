@@ -1,0 +1,408 @@
+{
+  "info": {
+    "_postman_id": "5eb1f5ff-5f63-4b4f-a2b7-ec4df5f198f7",
+    "name": "DSW01 - CRUD Empleados",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Pruebas funcionales y de validación para la API de empleados con Basic Auth."
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{username}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{password}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "username",
+      "value": "admin"
+    },
+    {
+      "key": "password",
+      "value": "admin123"
+    },
+    {
+      "key": "claveCreada",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Listar empleados (200)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/empleados?page=0",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "empleados"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const data = pm.response.json();",
+              "pm.test('Respuesta paginada válida', function () {",
+              "    pm.expect(data).to.have.property('content');",
+              "    pm.expect(data).to.have.property('page');",
+              "    pm.expect(data).to.have.property('size');",
+              "    pm.expect(data).to.have.property('totalElements');",
+              "    pm.expect(data).to.have.property('totalPages');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Crear empleado (201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Empleado Postman\",\n  \"direccion\": \"Calle Prueba 123\",\n  \"telefono\": \"555-000-1234\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/empleados",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "empleados"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 201', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "const data = pm.response.json();",
+              "pm.test('Empleado creado con clave', function () {",
+              "    pm.expect(data).to.have.property('clave');",
+              "    pm.expect(data.clave).to.match(/^E-[0-9]{4,}$/);",
+              "});",
+              "",
+              "pm.collectionVariables.set('claveCreada', data.clave);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Obtener empleado creado (200)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/empleados/{{claveCreada}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "empleados",
+            "{{claveCreada}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const data = pm.response.json();",
+              "const claveEsperada = pm.collectionVariables.get('claveCreada');",
+              "pm.test('Regresa el empleado correcto', function () {",
+              "    pm.expect(data.clave).to.eql(claveEsperada);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Actualizar empleado (200)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Empleado Postman Actualizado\",\n  \"direccion\": \"Avenida Actualizada 456\",\n  \"telefono\": \"555-999-0000\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/empleados/{{claveCreada}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "empleados",
+            "{{claveCreada}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const data = pm.response.json();",
+              "pm.test('Se actualiza el nombre', function () {",
+              "    pm.expect(data.nombre).to.eql('Empleado Postman Actualizado');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Eliminar empleado (204)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/empleados/{{claveCreada}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "empleados",
+            "{{claveCreada}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 204', function () {",
+              "    pm.response.to.have.status(204);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Obtener empleado eliminado (404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/empleados/{{claveCreada}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "empleados",
+            "{{claveCreada}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 404', function () {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "",
+              "const data = pm.response.json();",
+              "pm.test('Error estandarizado', function () {",
+              "    pm.expect(data.status).to.eql(404);",
+              "    pm.expect(data.error).to.eql('Not Found');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Crear empleado inválido (400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"\",\n  \"direccion\": \"Direccion X\",\n  \"telefono\": \"555000000\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/empleados",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "empleados"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 400', function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "const data = pm.response.json();",
+              "pm.test('Incluye detalles de validación', function () {",
+              "    pm.expect(data.status).to.eql(400);",
+              "    pm.expect(data.error).to.eql('Bad Request');",
+              "    pm.expect(data).to.have.property('details');",
+              "    pm.expect(data.details).to.have.property('nombre');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Clave inválida en path (400)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/empleados/INVALIDA",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "empleados",
+            "INVALIDA"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 400', function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "const data = pm.response.json();",
+              "pm.test('Mensaje de parámetros inválidos', function () {",
+              "    pm.expect(data.status).to.eql(400);",
+              "    pm.expect(data.message).to.eql('Parámetros inválidos en la solicitud.');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sin autenticación (401)",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/empleados?page=0",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "empleados"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 401', function () {",
+              "    pm.response.to.have.status(401);",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

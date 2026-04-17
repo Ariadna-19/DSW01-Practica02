@@ -1,7 +1,7 @@
 # Implementation Plan: CRUD de Empleados
 
-**Branch**: `001-crud-empleados` | **Date**: 2026-02-25 | **Spec**: `/specs/001-crud-empleados/spec.md`
-**Input**: Feature specification from `/specs/001-crud-empleados/spec.md`
+**Branch**: `002-crud-empleados` | **Date**: 2026-02-25 | **Spec**: `/specs/002-crud-empleados/spec.md`
+**Input**: Feature specification from `/specs/002-crud-empleados/spec.md`
 
 **Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/plan-template.md` for the execution workflow.
 
@@ -42,7 +42,7 @@ de Spring Boot 3 + Java 17, Basic Auth, PostgreSQL, Docker y Swagger.
 ### Documentation (this feature)
 
 ```text
-specs/001-crud-empleados/
+specs/002-crud-empleados/
 ├── plan.md              # This file (/speckit.plan command output)
 ├── research.md          # Phase 0 output (/speckit.plan command)
 ├── data-model.md        # Phase 1 output (/speckit.plan command)
