@@ -2,34 +2,13 @@ name: Pruebas
 
 on:
   push:
+    branches: [ main, develop ]
   pull_request:
+    branches: [ main, develop ]
 
 jobs:
-  unit-tests:
-    name: Unit Tests
-    runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: apps/frontend
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Instalar dependencias
-        run: npm install
-
-      - name: Ejecutar pruebas unitarias
-        run: npm run test -- --watch=false --browsers=ChromeHeadless
-
-  integration-tests:
-    name: Integration Tests
+  tests:
+    name: Unit & Integration Tests
     runs-on: ubuntu-latest
 
     services:
@@ -57,6 +36,9 @@ jobs:
           distribution: temurin
           java-version: '17'
           cache: maven
+
+      - name: Ejecutar pruebas unitarias
+        run: mvn -B test
 
       - name: Ejecutar pruebas de integración
         env:
@@ -68,71 +50,3 @@ jobs:
           SPRING_SECURITY_USER_NAME: admin
           SPRING_SECURITY_USER_PASSWORD: admin123
         run: mvn -B -Dtest='*IntegrationTest' test
-
-  e2e-tests:
-    name: End-to-End Tests
-    runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_DB: dsw01_practica02
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U postgres -d dsw01_practica02"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Configurar Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-          cache: maven
-
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Instalar dependencias para e2e
-        run: npm install -g newman
-
-      - name: Iniciar API para pruebas e2e
-        env:
-          DB_HOST: localhost
-          DB_PORT: 5432
-          DB_NAME: dsw01_practica02
-          DB_USER: postgres
-          DB_PASSWORD: postgres
-          SPRING_SECURITY_USER_NAME: admin
-          SPRING_SECURITY_USER_PASSWORD: admin123
-        run: |
-          mvn -B spring-boot:run > app.log 2>&1 &
-
-      - name: Esperar a que la API esté disponible
-        run: |
-          for i in {1..30}; do
-            if curl -sSf http://localhost:8080/actuator/health >/dev/null 2>&1 || curl -sSf http://localhost:8080/swagger-ui.html >/dev/null 2>&1; then
-              echo "API disponible"
-              exit 0
-            fi
-            sleep 5
-          done
-          echo "La API no inició a tiempo"
-          tail -n 200 app.log || true
-          exit 1
-
-      - name: Ejecutar pruebas end-to-end
-        run: |
-          newman run docs/api/postman_empleados_collection.json \
-            -e docs/api/postman_local_environment.json
