@@ -15,7 +15,7 @@ mvn spring-boot:run
 
 ## 2) Crear app Angular 19 en monorepo
 ```bash
-cd apps/frontend
+cd frontend
 npm install
 ```
 

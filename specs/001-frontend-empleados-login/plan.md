@@ -94,7 +94,7 @@ docker/
 ```
 
 **Structure Decision**: Monorepo único con backend Spring Boot existente en `src/` y nuevo
-frontend Angular 19 en `apps/frontend/`; contratos del feature en `specs/001-frontend-empleados-login/contracts/`.
+frontend Angular 19 en `frontend/`; contratos del feature en `specs/001-frontend-empleados-login/contracts/`.
 
 ## Complexity Tracking
 

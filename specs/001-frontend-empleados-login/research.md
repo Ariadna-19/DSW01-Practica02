@@ -1,11 +1,11 @@
 # Phase 0 Research - Frontend de Empleados con Login
 
 ## Decision 1: Estrategia de monorepo para frontend
-- **Decision**: Incorporar app Angular 19 en `apps/frontend` dentro del mismo repositorio.
+- **Decision**: Incorporar app Angular 19 en `frontend/` dentro del mismo repositorio.
 - **Rationale**: Cumple principio constitucional de monorepo y permite coordinación directa con backend y contratos.
 - **Alternatives considered**:
   - Repositorio separado para frontend: descartado por incumplir política de monorepo.
-  - Ubicar frontend en raíz `frontend/`: válido, pero `apps/frontend` escala mejor para futuras apps.
+  - Ubicar frontend en carpeta `frontend/`: descartado para simplificar estructura de directorios.
 
 ## Decision 2: Flujo de autenticación en frontend
 - **Decision**: Login explícito con `email` y `password` contra `POST /api/auth/login`.

@@ -11,11 +11,11 @@
 
 **Purpose**: Inicializar estructura monorepo y aplicación Angular 19 para el frontend.
 
-- [x] T001 Crear estructura base monorepo para frontend en apps/frontend/
-- [x] T002 Inicializar aplicación Angular 19 con routing en apps/frontend/package.json
-- [x] T003 [P] Configurar scripts de desarrollo/build en apps/frontend/package.json
-- [x] T004 [P] Configurar entorno API base URL en apps/frontend/src/environments/environment.ts
-- [x] T005 [P] Crear layout base y rutas raíz en apps/frontend/src/app/app.routes.ts
+- [x] T001 Crear estructura base monorepo para frontend en frontend/
+- [x] T002 Inicializar aplicación Angular 19 con routing en frontend/package.json
+- [x] T003 [P] Configurar scripts de desarrollo/build en frontend/package.json
+- [x] T004 [P] Configurar entorno API base URL en frontend/src/environments/environment.ts
+- [x] T005 [P] Crear layout base y rutas raíz en frontend/src/app/app.routes.ts
 
 ---
 
@@ -25,11 +25,11 @@
 
 **⚠️ CRITICAL**: Ninguna historia puede iniciar antes de completar esta fase.
 
-- [x] T006 Crear cliente HTTP base y manejo centralizado de errores en apps/frontend/src/app/core/http/api-client.service.ts
-- [x] T007 [P] Implementar servicio de sesión/autenticación de frontend en apps/frontend/src/app/core/auth/auth-session.service.ts
-- [x] T008 [P] Implementar guard de rutas autenticadas en apps/frontend/src/app/core/auth/auth.guard.ts
-- [x] T009 [P] Implementar interceptor para encabezados/sesión en apps/frontend/src/app/core/http/auth.interceptor.ts
-- [x] T010 Conectar guard e interceptor en configuración global de app en apps/frontend/src/app/app.config.ts
+- [x] T006 Crear cliente HTTP base y manejo centralizado de errores en frontend/src/app/core/http/api-client.service.ts
+- [x] T007 [P] Implementar servicio de sesión/autenticación de frontend en frontend/src/app/core/auth/auth-session.service.ts
+- [x] T008 [P] Implementar guard de rutas autenticadas en frontend/src/app/core/auth/auth.guard.ts
+- [x] T009 [P] Implementar interceptor para encabezados/sesión en frontend/src/app/core/http/auth.interceptor.ts
+- [x] T010 Conectar guard e interceptor en configuración global de app en frontend/src/app/app.config.ts
 - [x] T011 [P] Alinear contrato backend para login con email/password en src/main/java/com/dsw01/practica02/dto/LoginRequest.java
 - [x] T012 [P] Ajustar endpoint de login para aceptar email/password en src/main/java/com/dsw01/practica02/controller/AuthController.java
 - [x] T013 [P] Ajustar OpenAPI del feature para login por email/password en specs/001-frontend-empleados-login/contracts/openapi.yaml
@@ -46,14 +46,14 @@
 
 ### Implementation for User Story 1
 
-- [x] T014 [P] [US1] Crear página de login con formulario email/password en apps/frontend/src/app/auth/login/login.page.ts
-- [x] T015 [P] [US1] Crear plantilla y estilos de login en apps/frontend/src/app/auth/login/login.page.html
-- [x] T016 [US1] Implementar validaciones de formulario (email requerido y formato, password requerido) en apps/frontend/src/app/auth/login/login.form.ts
-- [x] T017 [US1] Implementar servicio de autenticación contra POST /api/auth/login en apps/frontend/src/app/auth/data-access/auth-api.service.ts
-- [x] T018 [US1] Integrar login exitoso con sesión y redirección a empleados en apps/frontend/src/app/auth/login/login.page.ts
-- [x] T019 [US1] Mostrar mensaje de error de autenticación fallida en apps/frontend/src/app/auth/login/login.page.html
-- [x] T020 [US1] Implementar cierre de sesión y limpieza de sesión en apps/frontend/src/app/core/auth/auth-session.service.ts
-- [x] T021 [US1] Proteger rutas de empleados con auth guard en apps/frontend/src/app/app.routes.ts
+- [x] T014 [P] [US1] Crear página de login con formulario email/password en frontend/src/app/auth/login/login.page.ts
+- [x] T015 [P] [US1] Crear plantilla y estilos de login en frontend/src/app/auth/login/login.page.html
+- [x] T016 [US1] Implementar validaciones de formulario (email requerido y formato, password requerido) en frontend/src/app/auth/login/login.form.ts
+- [x] T017 [US1] Implementar servicio de autenticación contra POST /api/auth/login en frontend/src/app/auth/data-access/auth-api.service.ts
+- [x] T018 [US1] Integrar login exitoso con sesión y redirección a empleados en frontend/src/app/auth/login/login.page.ts
+- [x] T019 [US1] Mostrar mensaje de error de autenticación fallida en frontend/src/app/auth/login/login.page.html
+- [x] T020 [US1] Implementar cierre de sesión y limpieza de sesión en frontend/src/app/core/auth/auth-session.service.ts
+- [x] T021 [US1] Proteger rutas de empleados con auth guard en frontend/src/app/app.routes.ts
 
 **Checkpoint**: US1 funcional y demostrable de forma independiente.
 
@@ -67,13 +67,13 @@
 
 ### Implementation for User Story 2
 
-- [x] T022 [P] [US2] Implementar servicio de consulta de empleados (list/detail) en apps/frontend/src/app/empleados/data-access/empleados-api.service.ts
-- [x] T023 [P] [US2] Crear modelo de vista de empleado en apps/frontend/src/app/empleados/domain/empleado.model.ts
-- [x] T024 [US2] Crear página de listado de empleados en apps/frontend/src/app/empleados/list/empleados-list.page.ts
-- [x] T025 [US2] Implementar plantilla de listado con navegación a detalle en apps/frontend/src/app/empleados/list/empleados-list.page.html
-- [x] T026 [US2] Crear página de detalle de empleado en apps/frontend/src/app/empleados/detail/empleado-detail.page.ts
-- [x] T027 [US2] Implementar plantilla de detalle de empleado en apps/frontend/src/app/empleados/detail/empleado-detail.page.html
-- [x] T028 [US2] Registrar rutas de listado y detalle en apps/frontend/src/app/app.routes.ts
+- [x] T022 [P] [US2] Implementar servicio de consulta de empleados (list/detail) en frontend/src/app/empleados/data-access/empleados-api.service.ts
+- [x] T023 [P] [US2] Crear modelo de vista de empleado en frontend/src/app/empleados/domain/empleado.model.ts
+- [x] T024 [US2] Crear página de listado de empleados en frontend/src/app/empleados/list/empleados-list.page.ts
+- [x] T025 [US2] Implementar plantilla de listado con navegación a detalle en frontend/src/app/empleados/list/empleados-list.page.html
+- [x] T026 [US2] Crear página de detalle de empleado en frontend/src/app/empleados/detail/empleado-detail.page.ts
+- [x] T027 [US2] Implementar plantilla de detalle de empleado en frontend/src/app/empleados/detail/empleado-detail.page.html
+- [x] T028 [US2] Registrar rutas de listado y detalle en frontend/src/app/app.routes.ts
 
 **Checkpoint**: US2 funcional sin depender de creación/edición/borrado.
 
@@ -87,13 +87,13 @@
 
 ### Implementation for User Story 3
 
-- [x] T029 [P] [US3] Extender API de empleados con create/update/delete en apps/frontend/src/app/empleados/data-access/empleados-api.service.ts
-- [x] T030 [P] [US3] Crear formulario reusable de empleado en apps/frontend/src/app/empleados/ui/empleado-form.component.ts
-- [x] T031 [US3] Implementar página de alta de empleado en apps/frontend/src/app/empleados/create/empleado-create.page.ts
-- [x] T032 [US3] Implementar página de edición de empleado en apps/frontend/src/app/empleados/edit/empleado-edit.page.ts
-- [x] T033 [US3] Implementar acción de eliminación con confirmación en apps/frontend/src/app/empleados/detail/empleado-detail.page.ts
-- [x] T034 [US3] Mostrar mensajes de éxito/error para operaciones CRUD en apps/frontend/src/app/empleados/ui/empleado-feedback.service.ts
-- [x] T035 [US3] Registrar rutas de create/edit en apps/frontend/src/app/app.routes.ts
+- [x] T029 [P] [US3] Extender API de empleados con create/update/delete en frontend/src/app/empleados/data-access/empleados-api.service.ts
+- [x] T030 [P] [US3] Crear formulario reusable de empleado en frontend/src/app/empleados/ui/empleado-form.component.ts
+- [x] T031 [US3] Implementar página de alta de empleado en frontend/src/app/empleados/create/empleado-create.page.ts
+- [x] T032 [US3] Implementar página de edición de empleado en frontend/src/app/empleados/edit/empleado-edit.page.ts
+- [x] T033 [US3] Implementar acción de eliminación con confirmación en frontend/src/app/empleados/detail/empleado-detail.page.ts
+- [x] T034 [US3] Mostrar mensajes de éxito/error para operaciones CRUD en frontend/src/app/empleados/ui/empleado-feedback.service.ts
+- [x] T035 [US3] Registrar rutas de create/edit en frontend/src/app/app.routes.ts
 
 **Checkpoint**: US3 funcional e independiente para validación completa de CRUD.
 
@@ -149,25 +149,25 @@ Dependency graph:
 ## Parallel Example: User Story 1
 
 ```bash
-Task: "T014 [US1] Crear página de login en apps/frontend/src/app/auth/login/login.page.ts"
-Task: "T015 [US1] Crear plantilla y estilos de login en apps/frontend/src/app/auth/login/login.page.html"
-Task: "T017 [US1] Implementar servicio auth-api en apps/frontend/src/app/auth/data-access/auth-api.service.ts"
+Task: "T014 [US1] Crear página de login en frontend/src/app/auth/login/login.page.ts"
+Task: "T015 [US1] Crear plantilla y estilos de login en frontend/src/app/auth/login/login.page.html"
+Task: "T017 [US1] Implementar servicio auth-api en frontend/src/app/auth/data-access/auth-api.service.ts"
 ```
 
 ## Parallel Example: User Story 2
 
 ```bash
-Task: "T022 [US2] Implementar servicio list/detail en apps/frontend/src/app/empleados/data-access/empleados-api.service.ts"
-Task: "T023 [US2] Crear modelo de empleado en apps/frontend/src/app/empleados/domain/empleado.model.ts"
-Task: "T026 [US2] Crear página detalle en apps/frontend/src/app/empleados/detail/empleado-detail.page.ts"
+Task: "T022 [US2] Implementar servicio list/detail en frontend/src/app/empleados/data-access/empleados-api.service.ts"
+Task: "T023 [US2] Crear modelo de empleado en frontend/src/app/empleados/domain/empleado.model.ts"
+Task: "T026 [US2] Crear página detalle en frontend/src/app/empleados/detail/empleado-detail.page.ts"
 ```
 
 ## Parallel Example: User Story 3
 
 ```bash
-Task: "T029 [US3] Extender API con create/update/delete en apps/frontend/src/app/empleados/data-access/empleados-api.service.ts"
-Task: "T030 [US3] Crear componente de formulario en apps/frontend/src/app/empleados/ui/empleado-form.component.ts"
-Task: "T031 [US3] Implementar página create en apps/frontend/src/app/empleados/create/empleado-create.page.ts"
+Task: "T029 [US3] Extender API con create/update/delete en frontend/src/app/empleados/data-access/empleados-api.service.ts"
+Task: "T030 [US3] Crear componente de formulario en frontend/src/app/empleados/ui/empleado-form.component.ts"
+Task: "T031 [US3] Implementar página create en frontend/src/app/empleados/create/empleado-create.page.ts"
 ```
 
 ---
