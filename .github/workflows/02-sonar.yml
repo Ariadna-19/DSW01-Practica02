@@ -8,7 +8,7 @@ on:
 
 jobs:
   sonar-backend:
-    name: SonarCloud Backend (Java)
+    name: Sonar Backend (Java)
     runs-on: ubuntu-latest
 
     services:
@@ -41,26 +41,16 @@ jobs:
 
       - name: Run backend tests
         working-directory: backend
-        env:
-          DB_HOST: localhost
-          DB_PORT: 5432
-          DB_NAME: dsw01_practica02
-          DB_USER: postgres
-          DB_PASSWORD: postgres
-        run: mvn -B clean test
+        run: mvn clean test
 
-      - name: SonarCloud Backend Scan
+      - name: Sonar Backend Scan
         working-directory: backend
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_ORGANIZATION: ${{ vars.SONAR_ORGANIZATION }}
-          SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY }}
         run: |
           mvn -B verify sonar:sonar \
-            -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-            -Dsonar.organization=${SONAR_ORGANIZATION} \
+            -Dsonar.projectKey=dsw01-practica02-backend \
+            -Dsonar.organization=TU_ORG_REAL \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${SONAR_TOKEN} \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
             -Dsonar.sources=src/main/java \
             -Dsonar.tests=src/test/java \
             -Dsonar.java.binaries=target/classes \
@@ -68,7 +58,7 @@ jobs:
 
 
   sonar-frontend:
-    name: SonarCloud Frontend (Angular/TS)
+    name: Sonar Frontend (Angular/TS)
     runs-on: ubuntu-latest
 
     steps:
@@ -77,7 +67,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node 20
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -88,22 +78,18 @@ jobs:
         working-directory: frontend
         run: npm ci
 
-      - name: Run frontend tests with coverage
+      - name: Run frontend tests
         working-directory: frontend
         run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
 
-      - name: SonarCloud Frontend Scan
+      - name: Sonar Frontend Scan
         working-directory: frontend
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_ORGANIZATION: ${{ vars.SONAR_ORGANIZATION }}
-          SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY }}-frontend
         run: |
           npx sonar-scanner \
-            -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-            -Dsonar.organization=${SONAR_ORGANIZATION} \
+            -Dsonar.projectKey=dsw01-practica02-frontend \
+            -Dsonar.organization=TU_ORG_REAL \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${SONAR_TOKEN} \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
             -Dsonar.sources=src \
             -Dsonar.tests=src \
             -Dsonar.test.inclusions=**/*.spec.ts \
