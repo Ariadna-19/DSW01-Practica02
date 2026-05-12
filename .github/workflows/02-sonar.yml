@@ -47,8 +47,8 @@ jobs:
         working-directory: backend
         run: |
           mvn sonar:sonar \
-            -Dsonar.projectKey=dsw01-practica02-backend \
-            -Dsonar.organization=TU_ORG_REAL \
+            -Dsonar.projectKey=Ariadna-19_DSW01-Practica02 \
+            -Dsonar.organization=Ariadna-19 \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
             -Dsonar.sources=src/main/java \
@@ -57,7 +57,7 @@ jobs:
 
 
   sonar-frontend:
-    name: Sonar Frontend (Angular CI FIXED)
+    name: Sonar Frontend (Angular FIXED)
     runs-on: ubuntu-latest
 
     steps:
@@ -66,7 +66,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node
+      - name: Setup Node 20
         uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -77,24 +77,25 @@ jobs:
         working-directory: frontend
         run: npm ci
 
-      - name: Run Angular tests (CI mode FIXED)
+      # 🔥 FIX REAL DE CHROME EN CI
+      - name: Run Angular tests (headless FIXED)
         working-directory: frontend
         run: |
           npm run test -- \
             --watch=false \
             --code-coverage \
-            --browsers=ChromeHeadlessCI
+            --browsers=ChromeHeadless
 
       - name: Verify coverage exists
         working-directory: frontend
-        run: ls -la coverage || echo "No coverage generated"
+        run: ls -la coverage || echo "NO coverage generated"
 
       - name: Sonar Frontend Scan
         working-directory: frontend
         run: |
           npx sonar-scanner \
-            -Dsonar.projectKey=dsw01-practica02-frontend \
-            -Dsonar.organization=TU_ORG_REAL \
+            -Dsonar.projectKey=Ariadna-19_DSW01-Practica02-frontend \
+            -Dsonar.organization=Ariadna-19 \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
             -Dsonar.sources=src \
