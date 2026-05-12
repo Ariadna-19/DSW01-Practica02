@@ -57,7 +57,7 @@ jobs:
 
 
   sonar-frontend:
-    name: Sonar Frontend (Angular)
+    name: Sonar Frontend (Angular CI FIXED)
     runs-on: ubuntu-latest
 
     steps:
@@ -77,13 +77,17 @@ jobs:
         working-directory: frontend
         run: npm ci
 
-      - name: Run tests with coverage
+      - name: Run Angular tests (CI mode FIXED)
         working-directory: frontend
-        run: npm run test -- --watch=false --code-coverage
+        run: |
+          npm run test -- \
+            --watch=false \
+            --code-coverage \
+            --browsers=ChromeHeadlessCI
 
-      - name: Verify coverage file exists
+      - name: Verify coverage exists
         working-directory: frontend
-        run: ls -la coverage || echo "No coverage folder generated"
+        run: ls -la coverage || echo "No coverage generated"
 
       - name: Sonar Frontend Scan
         working-directory: frontend
