@@ -48,7 +48,7 @@ jobs:
         run: |
           mvn sonar:sonar \
             -Dsonar.projectKey=Ariadna-19_DSW01-Practica02 \
-            -Dsonar.organization=Ariadna-19 \
+            -Dsonar.organization=ariadna-19 \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
             -Dsonar.sources=src/main/java \
@@ -77,7 +77,6 @@ jobs:
         working-directory: frontend
         run: npm ci
 
-      # 🔥 FIX REAL DE CHROME EN CI
       - name: Run Angular tests (headless FIXED)
         working-directory: frontend
         run: |
@@ -95,7 +94,7 @@ jobs:
         run: |
           npx sonar-scanner \
             -Dsonar.projectKey=Ariadna-19_DSW01-Practica02-frontend \
-            -Dsonar.organization=Ariadna-19 \
+            -Dsonar.organization=ariadna-19 \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
             -Dsonar.sources=src \
