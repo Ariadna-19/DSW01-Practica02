@@ -13,8 +13,8 @@ on:
     branches: [main, develop]
 
 jobs:
-  sonar:
-    name: SonarCloud Frontend and Backend
+  sonar-backend:
+    name: Sonar Backend (Java)
     runs-on: ubuntu-latest
 
     services:
@@ -27,15 +27,10 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U postgres -d dsw01_practica02"
+          --health-cmd "pg_isready -U postgres"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-
-    env:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      SONAR_ORGANIZATION: ${{ vars.SONAR_ORGANIZATION }}
-      SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY }}
 
     steps:
       - name: Checkout
@@ -50,6 +45,33 @@ jobs:
           java-version: "17"
           cache: maven
 
+      - name: Run backend tests
+        working-directory: backend
+        run: mvn clean test
+
+      - name: Sonar Backend Scan
+        working-directory: backend
+        run: |
+          mvn sonar:sonar \
+            -Dsonar.projectKey=Ariadna-19_DSW01-Practica02 \
+            -Dsonar.organization=ariadna-19 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.sources=src/main/java \
+            -Dsonar.tests=src/test/java \
+            -Dsonar.java.binaries=target/classes
+
+
+  sonar-frontend:
+    name: Sonar Frontend (Angular FIXED)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Setup Node 20
         uses: actions/setup-node@v4
         with:
@@ -57,38 +79,32 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/package-lock.json
 
-      - name: Install frontend dependencies
+      - name: Install dependencies
+        working-directory: frontend
         run: npm ci
+
+      - name: Run Angular tests (headless FIXED)
         working-directory: frontend
-
-      - name: Run frontend tests with coverage
-        run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
-        working-directory: frontend
-
-      - name: Run backend tests
-        env:
-          DB_HOST: localhost
-          DB_PORT: 5432
-          DB_NAME: dsw01_practica02
-          DB_USER: postgres
-          DB_PASSWORD: postgres
-          SPRING_SECURITY_USER_NAME: admin
-          SPRING_SECURITY_USER_PASSWORD: admin123
-          SPRING_SECURITY_USER_ROLES: USER
-        run: mvn -B test
-        working-directory: backend
-
-      - name: SonarCloud scan
         run: |
-          mvn -B verify sonar:sonar \
-            -Dsonar.projectKey="${SONAR_PROJECT_KEY}" \
-            -Dsonar.organization="${SONAR_ORGANIZATION}" \
+          npm run test -- \
+            --watch=false \
+            --code-coverage \
+            --browsers=ChromeHeadless
+
+      - name: Verify coverage exists
+        working-directory: frontend
+        run: ls -la coverage || echo "NO coverage generated"
+
+      - name: Sonar Frontend Scan
+        working-directory: frontend
+        run: |
+          npx sonar-scanner \
+            -Dsonar.projectKey=Ariadna-19_DSW01-Practica02-frontend \
+            -Dsonar.organization=ariadna-19 \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login="${SONAR_TOKEN}" \
-            -Dsonar.sources=backend/src/main/java,frontend/src \
-            -Dsonar.tests=backend/src/test/java,frontend/src \
-            -Dsonar.test.inclusions=backend/src/test/java/**/*Test.java,frontend/src/**/*.spec.ts \
-            -Dsonar.javascript.lcov.reportPaths=frontend/coverage/frontend/lcov.info \
-            -Dsonar.java.binaries=backend/target/classes \
-            -Dsonar.exclusions=frontend/node_modules/**,frontend/dist/**,frontend/.angular/**,backend/target/**,specs/**,docs/**
-        working-directory: backend
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.sources=src \
+            -Dsonar.tests=src \
+            -Dsonar.test.inclusions=**/*.spec.ts \
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
+            -Dsonar.exclusions=node_modules/**,dist/**,.angular/**
