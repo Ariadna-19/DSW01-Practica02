@@ -1,8 +1,9 @@
-name: 01 Tests
+name: 01-tests
 
 on:
   push:
     branches: [main, develop]
+
   pull_request:
     branches: [main, develop]
 
