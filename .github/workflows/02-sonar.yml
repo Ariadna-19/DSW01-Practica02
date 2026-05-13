@@ -1,6 +1,12 @@
 name: 02 Sonar Analysis
 
+
 on:
+  workflow_run:
+    workflows: 
+      -01-tests
+    types:
+      - completed
   push:
     branches: [main, develop]
   pull_request:
