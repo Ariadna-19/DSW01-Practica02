@@ -1,6 +1,11 @@
 name: 04 Docker Build and Push
 
 on:
+  orkflow_run:
+    workflows: 
+      -03_cypress
+    types:
+      - completed
   push:
     branches: [main, develop]
     tags:

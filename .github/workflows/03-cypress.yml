@@ -1,6 +1,11 @@
 name: 03 Cypress E2E
 
 on:
+  workflow_run:
+    workflows: 
+      -02_sonar
+    types:
+      - completed
   push:
     branches: [main, develop]
   pull_request:
