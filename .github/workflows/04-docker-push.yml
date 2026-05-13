@@ -6,12 +6,7 @@ on:
       -03-cypress
     types:
       - completed
-  push:
-    branches: [main, develop]
-    tags:
-      - "v*"
-  workflow_dispatch:
-
+      
 jobs:
   docker-push:
     name: Build and Push Frontend and Backend Images

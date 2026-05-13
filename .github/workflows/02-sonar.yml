@@ -6,10 +6,6 @@ on:
       -01-tests
     types:
       - completed
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main, develop]
 
 jobs:
   sonar-backend:

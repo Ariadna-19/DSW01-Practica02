@@ -6,10 +6,6 @@ on:
       -02-sonar
     types:
       - completed
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main, develop]
 
 jobs:
   detect-cypress:
