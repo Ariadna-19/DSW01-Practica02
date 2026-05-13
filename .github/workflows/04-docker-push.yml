@@ -1,9 +1,9 @@
 name: 04 Docker Build and Push
 
 on:
-  orkflow_run:
+  workflow_run:
     workflows: 
-      -03_cypress
+      -02_sonar
     types:
       - completed
   push:
