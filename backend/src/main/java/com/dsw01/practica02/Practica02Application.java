@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class Practica02Application {
-
+//algpop
     private static final Logger LOGGER = LoggerFactory.getLogger(Practica02Application.class);
 
     public static void main(String[] args) {
